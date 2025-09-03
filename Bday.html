@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Surprise</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    h1 {
+      color: #fff;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      
+    }
+    #giftBox {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(145deg, #ff6f61, #d64550);
+      border-radius: 15px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    #giftBox::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 120px;
+      background: #ffd700;
+    }
+    #giftBox::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 120px;
+      height: 30px;
+      background: #ffd700;
+    }
+      #arrow{
+        position: relative; /* makes it the reference for arrow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+      }
+    
+    #birthdayImage {
+      display: none;
+      max-width: 300px;
+      margin-top: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .flash {
+      animation: flashEffect 1s;
+    }
+    @keyframes flashEffect {
+      0% { background: #fff; }
+      100% { background: linear-gradient(to bottom, #ffdde1, #ee9ca7); }
+    }
+    .popper {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      background: gold;
+      border-radius: 50%;
+      animation: pop 1s forwards;
+    }
+    @keyframes pop {
+      0% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+      100% { transform: translate(calc(-50% + (random() * 200px - 100px)), -200px) scale(0.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="message">Click the box!</h1>
+  <div id="giftBox"></div>
+  <div id="arrow">⬇️</div>
+  <img id="birthdayImage" src="Srish.jpeg" alt="Birthday Surprise">
+
+  <script>
+    const giftBox = document.getElementById("giftBox");
+    const message = document.getElementById("message");
+    const arrow = document.getElementById("arrow");
+    const image = document.getElementById("birthdayImage");
+
+    giftBox.addEventListener("click", () => {
+      document.body.classList.add("flash");
+      setTimeout(() => {
+        document.body.classList.remove("flash");
+        giftBox.style.display = "none";
+        arrow.style.display = "none";
+        image.style.display = "block";
+        message.innerText = "🎉 HAPPY BIRTHDAY 🎉";
+        launchPoppers();
+      }, 1000);
+    });
+
+    function launchPoppers() {
+      for (let i = 0; i < 30; i++) {
+        const popper = document.createElement("div");
+        popper.className = "popper";
+        popper.style.background = ["red", "yellow", "blue", "green", "purple"][Math.floor(Math.random() * 5)];
+        popper.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(popper);
+        setTimeout(() => popper.remove(), 1000);
+      }
+    }
+  </script>
+</body>
+</html>
